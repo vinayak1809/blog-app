@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="static/base.css">
+    <title>{% block title %}{% endblock %}</title>
+  </head>
+  <body>
+      <div class="container">
+        <nav class="nav nav_flex" id="navbar">
+          <div class="nav_left">
+            <a class="logo option" href="/home">Home</a>
+          </div>
+          <div class="right nav_right">
+            {% if user.is_authenticated %}
+              
+          <div class="dropdown">
+            <div class="option profile">Profile</div>
+            <div class="dropdown-content">
+              <div class="profile-drop">
+                  
+                  <div>
+                    <img class="pro-img" src="data:;base64,{{imag}}" alt="image"/>
+                  </div>
+                          <div class="pro-user"><i>{{user.username}}</i></div>
+                          <div class="pro-about"><i>{{user.about}}</i></div>
+                  <div class="up_de">
+                          <div class="pro-update"><a href="/update_profile/{{user.username}}">
+                                  <button>update</button></a>
+                          </div>
+                          <div class="pro-delete"><a href="/delete_acc/{{user.username}}">
+                                  <button>del ac</button></a>
+                          </div>
+                  </div>
+                <!-- <a class="option logout" href="/logout">Logout</a> -->
+              </div>
+              </div>
+          </div>
+  
+                <a class="option" href="#read">Read</a>
+                <a class="option" href="/create-post">Create</a>
+                <a class="option logout" href="/logout">Logout</a>
+                <!-- <a class="option logout" href="/view_fav/{{user.username}}">fav</a> -->
+                {% else %}
+                <a class="option" href="/create-post">Create</a>
+                <a class="option" href="/login">Login</a>
+                <a class="option" href="/sign-up">SignUp</a>
+            {% endif %}
+          </div>
+        </nav>
+      
+      <div class="about">
+          <div class="info" align="center"> blog is a place <br> to write, read, <br> and grow.</div>
+          <div class="info_sec">
+            <img src="static/logo1.png" alt="logo">
+          </div>
+      </div>
+      <video width="320" height="240" loop="true" autoplay="autoplay" id="vid" muted> 
+        <source src="static/blog_video.mp4" type="video/mp4" >
+      </video>
+    <div class="container">{% block content %}{% endblock %}</div>
+
+    <footer class="footer flex">
+      <div class="footer_padding" style="line-height: 1.5em;">
+        <div class="help foot_flexbox">
+          
+          <div style="line-height: 5.5em;">Help</div>
+          <div>Help Center</div>
+          <div>Help Forum</div>
+          <div>Video Tutorials</div>
+        </div>
+        <div class="community foot_flexbox">
+          <div style="line-height: 5.5em;">Community</div>
+          <div class="bloggerbuzz">Blogger Buzz</div>
+        </div>
+        <div class="developers foot_flexbox">
+            <div style="line-height: 5.5em;"> Developers</div>
+            <div>Blogger API</div>
+            <div>Developer Forum</div>
+        </div>
+        
+      </div>
+    </div>
+      <script>
+        document.getElementById('vid').play();
+    </script><script
+      type="text/javascript"
+      src="{{ url_for('static', filename='index.js')}}"
+    ></script>
+    </footer>
+
+  </body>
+</html>

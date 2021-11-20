@@ -1,0 +1,93 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    rel="stylesheet">
+    <link rel="stylesheet" href="/static/view_post.css">
+    <title>{{post.title}}</title>
+</head>
+<body>
+    
+    <nav class="nav nav_flex" id="navbar">
+        <div class="nav_left">
+          <a class="logo option" href="/home">Home</a>
+        </div>
+        <div class="right nav_right">
+          {% if user.is_authenticated %}
+
+              <a class="option" href="#read">Read</a>
+              <a class="option" href="/create-post">Create</a>
+              <a class="option logout" href="/logout">Logout</a>
+             
+              
+              {% else %}
+              <a class="option" href="/create-post">Create</a>
+              <a class="option" href="/login">Login</a>
+              <a class="option" href="/sign-up">SignUp</a>
+          {% endif %}
+        </div>
+      </nav>
+    <main>
+            <div class="title" >{{post.title}}<br></div>
+            <div class="desc">{{post.description}}</div>
+            <div class="imag">
+              <img class="imag" src="data:;base64,{{post_img}}" alt="image"/>
+            </div>
+            <div class="info">{{post.text}}<br></div>
+
+
+            <div class="blog_user">
+                  <div class="like_count">{{ post.likes|length}}</div>
+                  <a href="/like-post/{{post.id}}">
+                    <div class="like"><span class="material-icons">favorite_border</span></div>
+                  </a>
+              {%if user.username == admin%}  
+                  <a href="/delete-post/{{post.id}}">
+                      <div class="delete"><span class="material-icons">remove_circle_outline</span></div>
+                  </a>
+              {%elif user.id == post.author%}
+              <a href="/delete-post/{{post.id}}">
+                <div class="delete"><span class="material-icons">remove_circle_outline</span></div>
+            </a>
+              {% endif %}
+            </div> 
+            <div class="date_button">
+                <i><div class="user">...{{post.user.username}}</div>
+                <div class="date">
+                  {{post.date_created}}
+                </div></i>
+            </div>  
+           
+              
+            
+            <form action="/create-comment/{{post.id}}" method="POST">
+                  <input type="text" id="text" name="cmmt" placeholder="comment">
+                  <button class="cmmt_btn" type="submit">Comment</button>
+            </form>
+              {% for comment in post.comments %} 
+            <div class="view_cmmt">
+              <div class="view_cmmt1">
+              {{comment.text}}   
+                
+                  <a class="delete_icon" href="/delete-comment/{{comment.id}}">
+                    <span class="material-icons">
+                      delete
+                    </span></a>
+              </div>
+              <div class="view_cmmt2">
+                  {{comment.user.username}}
+              </div>
+             
+            </div>
+            {%endfor%}
+            
+                 
+              <br/>
+    </main>   
+            
+</body>
+</html>

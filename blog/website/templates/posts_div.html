@@ -1,0 +1,40 @@
+{% extends "base.html" %} {% block title %}Home{% endblock %} 
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    rel="stylesheet">
+  <link rel="stylesheet" href="static/post_div.css">
+  <title>Document</title>
+</head>
+<body>
+<h1 class="headin" align = "center">Blogs</h1>
+
+{%for post in posts %}
+<main id="read">
+    <div class="dropdown">
+      <a target="_blank" href="/view_post/{{post.title}}">
+        <div class="title">{{post.title}}</div>
+      </a>
+          <div class="desc">{{post.description}}</div> 
+          <div class="save_author">
+            
+            <!-- <div class="save" >  
+                <a href="/fav/{{post.id}}"><span class="material-icons">bookmark_border</span></a>
+            </div> -->
+              <i><div class="user_click"> Author:{{post.user.username}}</div></i>
+          </div>
+      
+    </div>
+</main>
+      {%endfor%}
+      <br/>
+      
+    {% endblock %}
+
+</body>
+</html> 

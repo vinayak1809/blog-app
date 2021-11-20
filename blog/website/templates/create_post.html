@@ -1,0 +1,72 @@
+{% block title %}Home{% endblock %} 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="static/create_post.css">
+  <title>Create</title>
+</head>
+<body>
+  <nav class="nav nav_flex" id="navbar">
+    <div class="nav_left">
+      <a class="logo option" href="/home">Home</a>
+    </div>
+    <div class="right nav_right">
+      {% if user.is_authenticated %}
+      
+          <a class="option" href="#read">Read</a>
+          <a class="option" href="/create-post">Create</a>
+          <a class="option logout" href="/logout">Logout</a>
+          {% else %}
+          <a class="option" href="/create-post">Create</a>
+          <a class="option" href="/login">Login</a>
+          <a class="option" href="/sign-up">SignUp</a>
+      {% endif %}
+    </div>
+  </nav>
+  <h1 align="center">Make a Blog</h1>
+
+  <main>
+
+        <form action="" method="POST" enctype="multipart/form-data">
+            <textarea name="title" id="text" class="title" placeholder="title..."></textarea>
+            <textarea name="desc" id="text" class="desc" placeholder="description..."></textarea>
+
+            <div class="filewrap">
+              <span>+</span>
+              <input  type="file" class="upload" name="image" />
+          </div>
+            <textarea name="text" id="text" class="text" placeholder="info..."></textarea>
+            <br/>
+            <div>
+              <button onclick="myFunction()" type="submit" class="submit">Publish</button>
+            </div>
+
+            {% with messages = get_flashed_messages(with_categories=true) %} {% if
+              messages %} {% for category, message in messages %} {% if category ==
+              'error' %}
+              <script>
+              function myFunction() {
+              alert("{{ message }}");
+              }
+              </script>
+  
+          {% elif category ==
+              'success' %}
+              <script>
+                  function myFunction() {
+                    alert("{{ message }}");
+                  }
+              </script>
+  
+          {% endif %} {% endfor %} {% endif %} {% endwith %}
+        </form>
+        <br/>
+  
+        
+  </main>
+  
+</body>
+</html>
